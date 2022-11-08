@@ -5,9 +5,12 @@ const bodyParser = require("body-parser");
 
 const app = express();
 
-let items = ["Javier"];
+let items = ["Buy Food", "Cook Food", "Eat Food"];
 
 app.set("view engine", "ejs");
+
+// Local Files
+app.use(express.static("public"));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
