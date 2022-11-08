@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Templates</title>
+  </head>
+
+  <body>
+    <h1><%= todaysDate %> - To Do List</h1>
+
+    <ul>
+      <li>Buy Food</li>
+      <li>Cook Food</li>
+      <li>Eat Food</li>
+
+      <% for (let i = 0; i < newListItems.length; i++){ %>
+      <li><%= newListItems[i] %></li>
+      <% } %>
+    </ul>
+
+    <form action="/" method="POST">
+      <input type="text" name="newItem" />
+      <button type="submit" name="button">Add</button>
+    </form>
+  </body>
+</html>
