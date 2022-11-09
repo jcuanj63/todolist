@@ -16,7 +16,7 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // *****************************************************************
-// APP.GET is called when calling LOCALHOST:3000 in browser
+// APP.GET "/" is called when calling LOCALHOST:3000 in browser
 // *****************************************************************
 app.get("/", function (req, res) {
   let options = {
@@ -32,10 +32,17 @@ app.get("/", function (req, res) {
 });
 
 // *****************************************************************
-// WORK To Do List Screen
+// APP.GET "/WORK" - LOCALHOST:3000/WORK
 // *****************************************************************
 app.get("/work", function (req, res) {
   res.render("lists", { listTitle: "Work List", newListItems: workItems });
+});
+
+// *****************************************************************
+// APP.GET "/ABOUT" - LOCALHOST:3000/ABOUT
+// *****************************************************************
+app.get("/about", function (req, res) {
+  res.render("about", { listTitle: "About" });
 });
 
 // *****************************************************************
