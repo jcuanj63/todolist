@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const app = express();
 
 let items = ["Buy Food", "Cook Food", "Eat Food"];
+let workItems = [];
 
 app.set("view engine", "ejs");
 
@@ -16,9 +17,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // *****************************************************************
 // APP.GET is called when calling LOCALHOST:3000 in browser
-// It calculates the current date with "toLocaleDateString" function.
-// Then passes (RENDERs) the LISTS.EJS file to the browser with
-// "todaysDate" variable and "newListItems" array.
 // *****************************************************************
 app.get("/", function (req, res) {
   let options = {
@@ -30,22 +28,29 @@ app.get("/", function (req, res) {
   let today = new Date();
   let day = today.toLocaleDateString("en-US", options);
 
-  res.render("lists", { todaysDate: day, newListItems: items });
+  res.render("lists", { listTitle: day, newListItems: items });
 });
+
 // *****************************************************************
-// REDIRECT - When POST request is executed it will redirect
-// to our home route (/) and will trigger APP.GET and will render
-// again the LISTS file but now with both values: todaysDate and
-// newListItem
+// WORK To Do List Screen
+// *****************************************************************
+app.get("/work", function (req, res) {
+  res.render("lists", { listTitle: "Work List", newListItems: workItems });
+});
+
+// *****************************************************************
+// APP.POST is triggered when "New Item" Button is pressed.
 // *****************************************************************
 app.post("/", function (req, res) {
   let item = req.body.newItem;
 
-  // PUSH new typed/submitted item into ITEMS array
-  items.push(item);
-
-  // GO TO Home Route (app.get "/")
-  res.redirect("/");
+  if (req.body.button === "Work List") {
+    workItems.push(item);
+    res.redirect("/work");
+  } else {
+    items.push(item);
+    res.redirect("/");
+  }
 });
 
 // *****************************************************************
