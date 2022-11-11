@@ -1,7 +1,10 @@
-// TO DO LIST - FIRST VERSION
+// TO DO LIST - MODULE EXPORTS (DATE.JS)
 
 const express = require("express");
 const bodyParser = require("body-parser");
+
+// External Module "date.js" with module.export object
+const dateOne = require(__dirname + "/date.js");
 
 const app = express();
 
@@ -19,14 +22,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // APP.GET "/" is called when calling LOCALHOST:3000 in browser
 // *****************************************************************
 app.get("/", function (req, res) {
-  let options = {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-  };
+  // Call external Module date.getDate and assigne it to day
+  // We can also use --> let day = dateOne.getDay();
 
-  let today = new Date();
-  let day = today.toLocaleDateString("en-US", options);
+  let day = dateOne.getDate();
+
+  console.log(dateOne);
 
   res.render("lists", { listTitle: day, newListItems: items });
 });
@@ -35,7 +36,7 @@ app.get("/", function (req, res) {
 // APP.GET "/WORK" - LOCALHOST:3000/WORK
 // *****************************************************************
 app.get("/work", function (req, res) {
-  res.render("lists", { listTitle: "Work List", newListItems: workItems });
+  res.render("lists", { listTitle: "Work", newListItems: workItems });
 });
 
 // *****************************************************************
@@ -51,7 +52,7 @@ app.get("/about", function (req, res) {
 app.post("/", function (req, res) {
   let item = req.body.newItem;
 
-  if (req.body.button === "Work List") {
+  if (req.body.button === "Work") {
     workItems.push(item);
     res.redirect("/work");
   } else {
